@@ -30,16 +30,7 @@ void resize(int width, int height) {
 	glutPostRedisplay();
 }
 int main(int argc, char* argv[]) {
-	graphicsInit(argc, argv, __FILE__);
 
-	glutDisplayFunc(render);
-	glutReshapeFunc(resize);
-	glutKeyboardFunc(keyboardUtility);
-	glutMouseFunc(mouseUtility);
-
-	frameBuffer.setClearColor(yellow);
-
-	glutMainLoop();
 
 	return 0;
 }
