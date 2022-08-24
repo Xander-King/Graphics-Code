@@ -29,8 +29,33 @@ void resize(int width, int height) {
 	frameBuffer.setFrameBufferSize(width, height);
 	glutPostRedisplay();
 }
-int main(int argc, char* argv[]) {
 
+// compute the hypotenuse of two numbers
+double hypot(double a, double b) {
+    return sqrt(a*a + b*b);
+}
+
+void f(int &v) {
+    v++;
+}
+
+// change both values to the maximum value
+void makeMax(int &a, int &b) {
+    if(a > b) {
+        b = a;
+    }
+    else {
+        a = b;
+    }
+}
+
+int main(int argc, char* argv[]) {
+    
+    int a = 17;
+    int b = 2;
+    makeMax(a, b);
+    
+    cout << a << " " << b << endl;
 
 	return 0;
 }
