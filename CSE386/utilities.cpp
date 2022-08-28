@@ -26,7 +26,10 @@
   */
 
 void swap(double& a, double& b) {
-	/* CSE 386 - todo  */
+    double ph = a;
+    a = b;
+    b = ph;
+    /* CSE 386 - todo  */
 }
 
 /**
@@ -43,7 +46,7 @@ void swap(double& a, double& b) {
 
 bool approximatelyEqual(double a, double b) {
 	/* CSE 386 - todo  */
-	return false;
+	return a <= b + EPSILON && a >= b - EPSILON;
 }
 
 /**
@@ -59,7 +62,8 @@ bool approximatelyEqual(double a, double b) {
 
 bool approximatelyZero(double a) {
 	/* CSE 386 - todo  */
-	return false;
+    return approximatelyEqual(a, 0.0);
+    
 }
 
 /**
@@ -78,7 +82,8 @@ bool approximatelyZero(double a) {
 
 double normalizeDegrees(double degrees) {
 	/* CSE 386 - todo  */
-	return 0;
+    
+	return std::fmod((360 + std::fmod(degrees, 360)), 360);
 }
 
 /**
@@ -97,7 +102,7 @@ double normalizeDegrees(double degrees) {
 
 double normalizeRadians(double rads) {
 	/* CSE 386 - todo  */
-	return 0;
+	return std::fmod((TWO_PI + std::fmod(rads, TWO_PI)), TWO_PI);
 }
 
 /**
@@ -111,7 +116,9 @@ double normalizeRadians(double rads) {
 
 double rad2deg(double rads) {
 	/* CSE 386 - todo  */
-	return 0;
+    rads = normalizeRadians(rads);
+    
+	return (180*rads)/PI;
 }
 
 /**
@@ -125,7 +132,9 @@ double rad2deg(double rads) {
 
 double deg2rad(double degs) {
 	/* CSE 386 - todo  */
-	return 0;
+    degs = normalizeDegrees(degs);
+    
+	return (degs*PI)/180;
 }
 
 /**
@@ -139,8 +148,9 @@ double deg2rad(double degs) {
 */
 
 double min(double a, double b, double c) {
-	/* CSE 386 - todo  */
-	return 0;
+    /* CSE 386 - todo  */
+    double firstMin = glm::min(a, b);
+	return glm::min(firstMin, c);
 }
 
 /**
@@ -155,7 +165,8 @@ double min(double a, double b, double c) {
 
 double max(double a, double b, double c) {
 	/* CSE 386 - todo  */
-	return 0;
+    double firstMax = glm::max(a, b);
+	return glm::max(firstMax, c);
 }
 
 /**
@@ -174,7 +185,7 @@ double max(double a, double b, double c) {
 
 double distanceFromOrigin(double x, double y) {
 	/* CSE 386 - todo  */
-	return 0;
+	return distanceBetween(x, y, 0.0, 0.0);
 }
 
 /**
@@ -196,7 +207,7 @@ double distanceFromOrigin(double x, double y) {
 
 double distanceBetween(double x1, double y1, double x2, double y2) {
 	/* CSE 386 - todo  */
-	return 0;
+	return glm::sqrt((glm::pow((x1-x2), 2)) + (glm::pow((y1-y2), 2)));
 }
 
 /**
@@ -214,7 +225,11 @@ double distanceBetween(double x1, double y1, double x2, double y2) {
 
 double areaOfTriangle(double a, double b, double c) {
 	/* CSE 386 - todo  */
-	return 0;
+    if(a + b < c || b + c < a || c + a < b) {
+        return -1;
+    }
+    double semi = (a+b+c)/2;
+	return glm::sqrt(semi*(semi-a)*(semi-b)*(semi-c));
 }
 
 /**
@@ -233,7 +248,10 @@ double areaOfTriangle(double a, double b, double c) {
 
 double areaOfTriangle(double x1, double y1, double x2, double y2, double x3, double y3) {
 	/* CSE 386 - todo  */
-	return 0;
+    double a = distanceBetween(x1, y1, x2, y2);
+    double b = distanceBetween(x2, y2, x3, y3);
+    double c = distanceBetween(x1, y1, x3, y3);
+	return areaOfTriangle(a, b, c);
 }
 /**
  * @fn	void pointOnUnitCircle(double angleRads, double &x, double &y)
@@ -246,7 +264,9 @@ double areaOfTriangle(double x1, double y1, double x2, double y2, double x3, dou
 
 void pointOnUnitCircle(double angleRads, double& x, double& y) {
 	/* CSE 386 - todo  */
-	x = y = 0;
+    x = glm::cos(angleRads);
+    y = glm::sin(angleRads);
+	
 }
 
 /**

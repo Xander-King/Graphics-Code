@@ -50,12 +50,14 @@ void makeMax(int &a, int &b) {
 }
 
 int main(int argc, char* argv[]) {
-    
-    int a = 17;
-    int b = 2;
-    makeMax(a, b);
-    
-    cout << a << " " << b << endl;
+
+    // This is where you will do your testing of the functions
+            // you implement in utilities.cpp
+    double rad = PI;
+    double x = 0;
+    double y = 0;
+    pointOnUnitCircle(rad, x, y);
+        std::cout << x << " " << y << std::endl;
 
 	return 0;
 }
