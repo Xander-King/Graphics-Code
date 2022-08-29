@@ -49,15 +49,33 @@ void makeMax(int &a, int &b) {
     }
 }
 
+// Just here to practice the debugger
+// counts how many steps it takes to get from the start number to 10
+// if we increase by a given increment
+// stepsToTen(6, 1) --> 4
+// stepsToTen(8.5, 0.5) --> 3
+// stepsToTen(9.0, 0.1) --> 10
+int stepsToTen(double start, double inc) {
+
+        int steps = 0;
+
+        while (start != 10) {
+
+                start += inc;
+
+                steps++;
+
+        }
+
+        return steps;
+
+}
+
+
 int main(int argc, char* argv[]) {
 
-    // This is where you will do your testing of the functions
-            // you implement in utilities.cpp
-    double rad = PI;
-    double x = 0;
-    double y = 0;
-    pointOnUnitCircle(rad, x, y);
-        std::cout << x << " " << y << std::endl;
+
+        std::cout << stepsToTen(9.0, 0.1) << std::endl;
 
 	return 0;
 }

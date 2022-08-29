@@ -17,6 +17,11 @@
 #include "utilities.h"
 #include "ishape.h"
 
+
+
+
+
+
  /**
   * @fn	void swap(double &a, double &b)
   * @brief	Swaps that values of two doubleing point numbers, without
@@ -225,7 +230,7 @@ double distanceBetween(double x1, double y1, double x2, double y2) {
 
 double areaOfTriangle(double a, double b, double c) {
 	/* CSE 386 - todo  */
-    if(a + b < c || b + c < a || c + a < b) {
+    if(a + b <= c || b + c <= a || c + a <= b) {
         return -1;
     }
     double semi = (a+b+c)/2;
