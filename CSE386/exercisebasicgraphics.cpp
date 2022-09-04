@@ -74,8 +74,6 @@ int stepsToTen(double start, double inc) {
 
 int main(int argc, char* argv[]) {
 
-
-        std::cout << stepsToTen(9.0, 0.1) << std::endl;
-
+    cout << quadratic(-2, 4, 62) <<  endl;
 	return 0;
 }
