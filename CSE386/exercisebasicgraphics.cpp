@@ -73,7 +73,10 @@ int stepsToTen(double start, double inc) {
 
 
 int main(int argc, char* argv[]) {
-
-    cout << quadratic(-2, 4, 62) <<  endl;
+    
+    glm::dvec2 point(0, -2);
+    
+    cout <<  directionInRadians(2,2,2,0) << endl;
+    
 	return 0;
 }
