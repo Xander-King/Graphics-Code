@@ -74,9 +74,11 @@ int stepsToTen(double start, double inc) {
 
 int main(int argc, char* argv[]) {
     
-    glm::dvec2 point(0, -2);
+    dvec3 point2(2.5, 8.0, 1.2);
+    dvec3 point3(8.7, 1.0, 2.3);
     
-    cout <<  directionInRadians(2,2,2,0) << endl;
+    cout << pointingVector(point2, point3) << endl;
+    
     
 	return 0;
 }
