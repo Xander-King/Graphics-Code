@@ -22,11 +22,13 @@
 		517600B3257E9F3800DD37C4 /* fragmentops.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51760082257E9F3700DD37C4 /* fragmentops.cpp */; };
 		517600B5257E9F3800DD37C4 /* iscene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51760085257E9F3700DD37C4 /* iscene.cpp */; };
 		517600B6257E9F3800DD37C4 /* ishape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51760086257E9F3700DD37C4 /* ishape.cpp */; };
-		517600B9257E9F3800DD37C4 /* exercisebasicgraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5176008D257E9F3700DD37C4 /* exercisebasicgraphics.cpp */; };
 		517600BB257E9F3800DD37C4 /* vertexops.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5176008F257E9F3800DD37C4 /* vertexops.cpp */; };
 		517600C5257EA7B000DD37C4 /* usflag.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 517600C4257EA7B000DD37C4 /* usflag.ppm */; };
 		517600C8257EA7E900DD37C4 /* blackbuck.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 517600C7257EA7E900DD37C4 /* blackbuck.ppm */; };
 		517600CA257EA7EF00DD37C4 /* snail.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5176007E257E9F3700DD37C4 /* snail.ppm */; };
+		CF6CCE2D28F449D800776090 /* CameraRayShapeTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF6CCE2C28F449D800776090 /* CameraRayShapeTests.cpp */; };
+		CF6CCE3028F44C5F00776090 /* SampleRaytrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF6CCE2E28F449F800776090 /* SampleRaytrace.cpp */; };
+		CF6CCE3228F5088900776090 /* SphereIntersectionTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF6CCE3128F5088900776090 /* SphereIntersectionTests.cpp */; };
 		CFC25DD228BF94E300468324 /* utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CFC25DD128BF94E300468324 /* utilities.cpp */; };
 /* End PBXBuildFile section */
 
@@ -102,11 +104,13 @@
 		51760088257E9F3700DD37C4 /* packages.config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = packages.config; sourceTree = "<group>"; };
 		5176008B257E9F3700DD37C4 /* colorandmaterials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = colorandmaterials.h; sourceTree = "<group>"; };
 		5176008C257E9F3700DD37C4 /* fragmentops.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fragmentops.h; sourceTree = "<group>"; };
-		5176008D257E9F3700DD37C4 /* exercisebasicgraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exercisebasicgraphics.cpp; sourceTree = "<group>"; };
 		5176008F257E9F3800DD37C4 /* vertexops.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vertexops.cpp; sourceTree = "<group>"; };
 		517600C4257EA7B000DD37C4 /* usflag.ppm */ = {isa = PBXFileReference; lastKnownFileType = file; name = usflag.ppm; path = CSE386/usflag.ppm; sourceTree = "<group>"; };
 		517600C7257EA7E900DD37C4 /* blackbuck.ppm */ = {isa = PBXFileReference; lastKnownFileType = text; name = blackbuck.ppm; path = CSE386/blackbuck.ppm; sourceTree = "<group>"; };
 		51AECD9824B4142F00BC4B16 /* CSE386 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CSE386; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF6CCE2C28F449D800776090 /* CameraRayShapeTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraRayShapeTests.cpp; sourceTree = "<group>"; };
+		CF6CCE2E28F449F800776090 /* SampleRaytrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SampleRaytrace.cpp; sourceTree = "<group>"; };
+		CF6CCE3128F5088900776090 /* SphereIntersectionTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SphereIntersectionTests.cpp; sourceTree = "<group>"; };
 		CFC25DD128BF94E300468324 /* utilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = utilities.cpp; path = ../../../../utilities.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +156,9 @@
 		51AECD9A24B4142F00BC4B16 /* CSE386 */ = {
 			isa = PBXGroup;
 			children = (
+				CF6CCE3128F5088900776090 /* SphereIntersectionTests.cpp */,
+				CF6CCE2E28F449F800776090 /* SampleRaytrace.cpp */,
+				CF6CCE2C28F449D800776090 /* CameraRayShapeTests.cpp */,
 				5176006A257E9F3600DD37C4 /* camera.cpp */,
 				51760052257E9F3500DD37C4 /* camera.h */,
 				51760061257E9F3600DD37C4 /* colorandmaterials.cpp */,
@@ -164,7 +171,6 @@
 				51760062257E9F3600DD37C4 /* Doxyfile */,
 				51760076257E9F3700DD37C4 /* eshape.cpp */,
 				51760051257E9F3500DD37C4 /* eshape.h */,
-				5176008D257E9F3700DD37C4 /* exercisebasicgraphics.cpp */,
 				51760082257E9F3700DD37C4 /* fragmentops.cpp */,
 				5176008C257E9F3700DD37C4 /* fragmentops.h */,
 				51760078257E9F3700DD37C4 /* framebuffer.cpp */,
@@ -256,17 +262,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				51760097257E9F3800DD37C4 /* raytracer.cpp in Sources */,
+				CF6CCE2D28F449D800776090 /* CameraRayShapeTests.cpp in Sources */,
 				517600AA257E9F3800DD37C4 /* light.cpp in Sources */,
 				517600A1257E9F3800DD37C4 /* image.cpp in Sources */,
+				CF6CCE3028F44C5F00776090 /* SampleRaytrace.cpp in Sources */,
 				517600B6257E9F3800DD37C4 /* ishape.cpp in Sources */,
 				517600AF257E9F3800DD37C4 /* vertextdata.cpp in Sources */,
-				517600B9257E9F3800DD37C4 /* exercisebasicgraphics.cpp in Sources */,
 				5176009F257E9F3800DD37C4 /* colorandmaterials.cpp in Sources */,
 				517600AB257E9F3800DD37C4 /* eshape.cpp in Sources */,
 				5176009C257E9F3800DD37C4 /* io.cpp in Sources */,
 				517600AE257E9F3800DD37C4 /* defs.cpp in Sources */,
 				517600B3257E9F3800DD37C4 /* fragmentops.cpp in Sources */,
 				CFC25DD228BF94E300468324 /* utilities.cpp in Sources */,
+				CF6CCE3228F5088900776090 /* SphereIntersectionTests.cpp in Sources */,
 				517600B5257E9F3800DD37C4 /* iscene.cpp in Sources */,
 				517600A5257E9F3800DD37C4 /* camera.cpp in Sources */,
 				517600AD257E9F3800DD37C4 /* framebuffer.cpp in Sources */,

@@ -28,14 +28,21 @@ RayTracer::RayTracer(const color& defa)
  * @param 		  	theScene   	The scene.
  */
 
+//This is where the color math calculations happen.
 void RayTracer::raytraceScene(FrameBuffer& frameBuffer, int depth,
 	const IScene& theScene) const {
 	const RaytracingCamera& camera = *theScene.camera;
-	const vector<VisibleIShapePtr>& objs = theScene.opaqueObjs;
+	const vector<VisibleIShapePtr>& objs = theScene.opaqueObjs; // all our non-transparent objects
 	const vector<PositionalLightPtr>& lights = theScene.lights;
 
+    // frameBuffer is our pixels we want to show
+    // looping through each pixel in the frame buffer
 	for (int y = 0; y < frameBuffer.getWindowHeight(); ++y) {
 		for (int x = 0; x < frameBuffer.getWindowWidth(); ++x) {
+            // This is where we can debug a particular ray for a particular pixel.
+            // Set a breakpoint on the cout line below
+            // Right-click on a "problem pixel"
+            // If you need to make the rendering window re-render (press space bar or click // the window)
 			DEBUG_PIXEL = (x == xDebug && y == yDebug);
 			if (DEBUG_PIXEL) {
 				cout << "";
@@ -43,7 +50,7 @@ void RayTracer::raytraceScene(FrameBuffer& frameBuffer, int depth,
 			/* CSE 386 - todo  */
 			const VisibleIShape& firstVisibleShape = *theScene.opaqueObjs[0];
 			const IShape& firstShape = *firstVisibleShape.shape;
-			Ray ray = camera.getRay(x, y);
+			Ray ray = camera.getRay(x, y); //get the ray for the pixel at (x,y)
 			OpaqueHitRecord hit;
 			firstShape.findClosestIntersection(ray, hit);
 			if (hit.t != FLT_MAX) {
