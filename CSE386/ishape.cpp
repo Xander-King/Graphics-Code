@@ -162,7 +162,23 @@ IDisk::IDisk(const dvec3& pos, const dvec3& normal, double rad)
 
 void IDisk::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
 	/* CSE 386 - todo  */
-	hit.t = FLT_MAX;
+    // First calcualte whether the ray intersects the plane containing this disk
+    // and if so, see if the intersection is INSIDE the disk.
+    //IPlane plane(______, _______); // now you have the plane you want and can use its methods
+    IPlane plane(center, n);
+    plane.findClosestIntersection(ray, hit);
+    
+    if (center.x + radius >= hit.interceptPt.x
+        || center.y + radius >= hit.interceptPt.y
+        || center.z + radius >= hit.interceptPt.z
+        || hit.t == FLT_MAX) {
+        
+        hit.t = FLT_MAX;
+        return;
+    }
+    
+    hit.interceptPt = ray.getPoint(hit.t);
+    hit.normal = n;
 }
 
 /**
@@ -389,9 +405,27 @@ bool IPlane::onFrontSide(const dvec3& point) const {
 
 void IPlane::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
 	/* CSE 386 - todo  */
-	hit.t = FLT_MAX;
-	hit.interceptPt = ORIGIN3D;
-	hit.normal = Y_AXIS;
+    // What should this function do if the ray does NOT hit the plane:
+    // set hit.t to FLT_MAX;
+    // t = (a-e) dot n / (d dot n)
+    // have a and n, directly from the iplane, and we have
+    // d is just ray.dir, and e is just ray origin
+	
+    double den = glm::dot(ray.dir, n);
+    
+    if(den == 0) { //aproximately 0?
+        hit.t = FLT_MAX; //this is what we do with hit record when theres no hit
+        return;
+    }
+    
+    hit.t = glm::dot(a - ray.origin, n) / den;
+    if(hit.t < 0) { //-t when plane is behind viewing ray
+        hit.t = FLT_MAX;
+        return;
+    }
+    //hit.t = FLT_MAX;
+	hit.interceptPt = ray.getPoint(hit.t);
+	hit.normal = n;
 }
 
 /**
@@ -597,7 +631,9 @@ int IQuadricSurface::findIntersections(const Ray& ray, HitRecord hits[2]) const 
  */
 
 void IQuadricSurface::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
-	HitRecord hits[2];
+	//This works for any quadric surface
+    //many of these are infinite
+    HitRecord hits[2];
 	hit.t = FLT_MAX;
 
 	int numIntercepts = findIntersections(ray, hits);
@@ -732,9 +768,16 @@ ICylinderY::ICylinderY(const dvec3& pos, double rad, double len)
 
 void ICylinderY::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
 	static HitRecord hits[2];
+    // find all intersections of the ray, with the infinite version of the cylinder
+    // we want the one with the smallest possible t value
 	int numHits = IQuadricSurface::findIntersections(ray, hits);
-
-	if (numHits == 0) {
+    // if there are hits, then hits[0] and possibly hits[1] will have data you can use
+    // You'll need to look at the t-value and the intersection points
+    // to determine IF there is a closest intersection, and where it is.
+    // remember that if there are 2 valid hits, they will be sorted by t value
+    // is your quadratic broken? if so, you may find out today.
+	
+    if (numHits == 0) {
 		hit.t = FLT_MAX;
 	} else {
 		hit = hits[0];

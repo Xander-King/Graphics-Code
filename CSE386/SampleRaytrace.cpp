@@ -52,7 +52,7 @@ void resize(int width, int height) {
 
 void buildScene() {
     // Mathematical Definitions of Shapes
-	IShape* plane = new IPlane(dvec3(0.0, -2.0, 0.0), dvec3(0.0, 1.0, 0.0)); //point, normal vector
+	IShape* plane = new IPlane(dvec3(0.0, 0.0, 0.0), dvec3(0.0, 1.0, 0.0)); //point, normal vector
 	ISphere* sphere1 = new ISphere(dvec3(10.0, -5.0, 0.0), 3.0); //Center, radius
 	ISphere* sphere2 = new ISphere(dvec3(-2.0, 0.0, -8.0), 2.0);
 	IEllipsoid* ellipsoid = new IEllipsoid(dvec3(4.0, 0.0, 3.0), dvec3(2.0, 1.0, 2.0)); //pos, sizes of axis
@@ -67,17 +67,17 @@ void buildScene() {
 
 	scene.addLight(lights[0]);
 }
-//int main(int argc, char* argv[]) {
-//	graphicsInit(argc, argv, __FILE__);
-//
-//	glutDisplayFunc(render);
-//	glutReshapeFunc(resize);
-//	glutKeyboardFunc(keyboardUtility);
-//	glutMouseFunc(mouseUtility);
-//
-//	buildScene();
-//
-//	glutMainLoop();
-//
-//	return 0;
-//}
+int main(int argc, char* argv[]) {
+	graphicsInit(argc, argv, __FILE__);
+
+	glutDisplayFunc(render);
+	glutReshapeFunc(resize);
+	glutKeyboardFunc(keyboardUtility);
+	glutMouseFunc(mouseUtility);
+
+	buildScene();
+
+	glutMainLoop();
+
+	return 0;
+}

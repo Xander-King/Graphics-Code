@@ -119,12 +119,12 @@ int whichSphere(const Ray& ray, const ISphere& sphere1, const ISphere& sphere2) 
     return 0;
 }
 
-int main(int argc, char* argv[]) {
-    // Do your testing here
-
-    Ray rayray = Ray(dvec3(0,0,0), dvec3(0,1,0));
-    ISphere s1 = ISphere(dvec3(10, 0, 0), 5.0);
-    
-    cout << rayIntersectsSphere(rayray, s1) << endl;
-    return 0;
-}
+//int main(int argc, char* argv[]) {
+//    // Do your testing here
+//
+//    Ray rayray = Ray(dvec3(0,0,0), dvec3(0,1,0));
+//    ISphere s1 = ISphere(dvec3(10, 0, 0), 5.0);
+//
+//    cout << rayIntersectsSphere(rayray, s1) << endl;
+//    return 0;
+//}
