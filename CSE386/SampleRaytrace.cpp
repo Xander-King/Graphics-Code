@@ -74,18 +74,18 @@ void buildScene() {
     }
 	scene.addLight(lights[0]);
 }
-int main(int argc, char* argv[]) {
-	graphicsInit(argc, argv, __FILE__);
-
-	glutDisplayFunc(render);
-	glutReshapeFunc(resize);
-	glutKeyboardFunc(keyboardUtility);
-	glutMouseFunc(mouseUtility);
-
-	buildScene();
-
-	glutMainLoop();
-
-	return 0;
-}
+//int main(int argc, char* argv[]) {
+//	graphicsInit(argc, argv, __FILE__);
+//
+//	glutDisplayFunc(render);
+//	glutReshapeFunc(resize);
+//	glutKeyboardFunc(keyboardUtility);
+//	glutMouseFunc(mouseUtility);
+//
+//	buildScene();
+//
+//	glutMainLoop();
+//
+//	return 0;
+//}
 

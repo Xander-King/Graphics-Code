@@ -767,10 +767,40 @@ void IConeY::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
 	static HitRecord hits[2];
 	int numHits = IQuadricSurface::findIntersections(ray, hits);
 
+
 	if (numHits == 0) {
 		hit.t = FLT_MAX;
-	} else {
-		hit = hits[0];
+    } else if (numHits == 1) {
+        if(hits[0].t >= 0 && hits[0].interceptPt.y <= radius) {
+            hit = hits[0];
+        } else {
+            hit.t = FLT_MAX;
+        }
+    } else {
+        if(hits[0].interceptPt.y > radius && hits[1].interceptPt.y <= radius) {
+            if (hits[1].t >= 0){
+                hit = hits[1];
+            } else {
+                hit.t = FLT_MAX;
+            }
+        } else if (hits[0].interceptPt.y <= radius && hits[1].interceptPt.y > radius) {
+            if (hits[0].t >= 0) {
+                hit = hits[0];
+            } else {
+                hit.t = FLT_MAX;
+            }
+        } else if (hits[0].interceptPt.y > radius && hits[1].interceptPt.y > radius) {
+            hit.t = FLT_MAX;
+        } else {
+            if (hits[0].t < 0 && hits[1].t >= 0) {
+                hit = hits[1];
+            } else if (hits[0].t < 0 && hits[1].t < 0){
+                hit.t = FLT_MAX;
+            }  else {
+                hit = hits[0];
+            }
+                
+            }
 	}
 }
 
@@ -818,10 +848,40 @@ void ICylinderY::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
 	
     if (numHits == 0) {
 		hit.t = FLT_MAX;
-	} else {
-		hit = hits[0];
-	}
+	} else if (numHits == 1) {
+        if(hits[0].t >= 0 && hits[0].interceptPt.y <= radius) {
+            hit = hits[0];
+        } else {
+            hit.t = FLT_MAX;
+        }
+    } else {
+        if(hits[0].interceptPt.y > radius && hits[1].interceptPt.y <= radius) {
+            if (hits[1].t >= 0){
+                hit = hits[1];
+            } else {
+                hit.t = FLT_MAX;
+            }
+        } else if (hits[0].interceptPt.y <= radius && hits[1].interceptPt.y > radius) {
+            if (hits[0].t >= 0) {
+                hit = hits[0];
+            } else {
+                hit.t = FLT_MAX;
+            }
+        } else if (hits[0].interceptPt.y > radius && hits[1].interceptPt.y > radius) {
+            hit.t = FLT_MAX;
+        } else {
+            if (hits[0].t < 0 && hits[1].t >= 0) {
+                hit = hits[1];
+            } else if (hits[0].t < 0 && hits[1].t < 0){
+                hit.t = FLT_MAX;
+            }  else {
+                hit = hits[0];
+            }
+                
+            }
+        }
 }
+
 
 /**
 * @fn	void ICylinderY::getTexCoords(const dvec3 &pt, double &u, double &v) const
@@ -845,4 +905,13 @@ void ICylinderY::getTexCoords(const dvec3& pt, double& u, double& v) const {
 
 IEllipsoid::IEllipsoid(const dvec3& position, const dvec3& sz)
 	: IQuadricSurface(QuadricParameters::ellipsoidQParams(sz), position) {
+}
+
+int main(int argc, char* argv[]) {
+    HitRecord hit;
+    Ray ray(dvec3(0,0,0),dvec3((1/glm::sqrt(3.0)),(1/glm::sqrt(3.0)),(1/glm::sqrt(3.0))));
+    IPlane plane(dvec3(1,2,3), dvec3((-1/glm::sqrt(3.0)),(-1/glm::sqrt(3.0)),(-1/glm::sqrt(3.0))));
+    plane.findClosestIntersection(ray, hit);
+    cout << hit.normal << endl;
+    return 0;
 }
