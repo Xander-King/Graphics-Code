@@ -30,6 +30,7 @@
 		CF6CCE3028F44C5F00776090 /* SampleRaytrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF6CCE2E28F449F800776090 /* SampleRaytrace.cpp */; };
 		CF6CCE3228F5088900776090 /* SphereIntersectionTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF6CCE3128F5088900776090 /* SphereIntersectionTests.cpp */; };
 		CFC25DD228BF94E300468324 /* utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CFC25DD128BF94E300468324 /* utilities.cpp */; };
+		CFD717E428FC8B7000A53C7C /* IntersectionTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CFD717E328FC8B7000A53C7C /* IntersectionTests.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -112,6 +113,7 @@
 		CF6CCE2E28F449F800776090 /* SampleRaytrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SampleRaytrace.cpp; sourceTree = "<group>"; };
 		CF6CCE3128F5088900776090 /* SphereIntersectionTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SphereIntersectionTests.cpp; sourceTree = "<group>"; };
 		CFC25DD128BF94E300468324 /* utilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = utilities.cpp; path = ../../../../utilities.cpp; sourceTree = "<group>"; };
+		CFD717E328FC8B7000A53C7C /* IntersectionTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IntersectionTests.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 		51AECD9A24B4142F00BC4B16 /* CSE386 */ = {
 			isa = PBXGroup;
 			children = (
+				CFD717E328FC8B7000A53C7C /* IntersectionTests.cpp */,
 				CF6CCE3128F5088900776090 /* SphereIntersectionTests.cpp */,
 				CF6CCE2E28F449F800776090 /* SampleRaytrace.cpp */,
 				CF6CCE2C28F449D800776090 /* CameraRayShapeTests.cpp */,
@@ -269,6 +272,7 @@
 				517600B6257E9F3800DD37C4 /* ishape.cpp in Sources */,
 				517600AF257E9F3800DD37C4 /* vertextdata.cpp in Sources */,
 				5176009F257E9F3800DD37C4 /* colorandmaterials.cpp in Sources */,
+				CFD717E428FC8B7000A53C7C /* IntersectionTests.cpp in Sources */,
 				517600AB257E9F3800DD37C4 /* eshape.cpp in Sources */,
 				5176009C257E9F3800DD37C4 /* io.cpp in Sources */,
 				517600AE257E9F3800DD37C4 /* defs.cpp in Sources */,

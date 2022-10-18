@@ -37,7 +37,9 @@ void render() {
 	int width = frameBuffer.getWindowWidth();
 	int height = frameBuffer.getWindowHeight();
 
-	scene.camera = new PerspectiveCamera(cameraPos, cameraFocus, cameraUp, cameraFOV, width, height);
+	//scene.camera = new PerspectiveCamera(cameraPos, cameraFocus, cameraUp, cameraFOV, width, height);
+    scene.camera = new OrthographicCamera(cameraPos, cameraFocus, cameraUp, width, height, 1);
+
 	rayTrace.raytraceScene(frameBuffer, 0, scene);
 
 	int frameEndTime = glutGet(GLUT_ELAPSED_TIME); // Get end time
@@ -59,12 +61,17 @@ void buildScene() {
 	IDisk* disk = new IDisk(dvec3(15.0, 0.0, 0.0), dvec3(0.0, 0.0, 1.0), 5.0); 
     
     //We need atleast one visibleIShape or transparentShape
-    scene.addOpaqueObject(new VisibleIShape(sphere1, silver));
-	scene.addOpaqueObject(new VisibleIShape(plane, tin));
-	scene.addOpaqueObject(new VisibleIShape(sphere2, bronze));
-	scene.addOpaqueObject(new VisibleIShape(ellipsoid, redPlastic));
-	scene.addOpaqueObject(new VisibleIShape(disk, cyanPlastic));
+   // scene.addOpaqueObject(new VisibleIShape(sphere1, silver));
+	//scene.addOpaqueObject(new VisibleIShape(plane, tin));
+	//scene.addOpaqueObject(new VisibleIShape(sphere2, bronze));
+	//scene.addOpaqueObject(new VisibleIShape(ellipsoid, redPlastic));
+	//scene.addOpaqueObject(new VisibleIShape(disk, cyanPlastic));
+    // loop to make five spheres
+    for (int i = 0; i < 5; i++) {
+        ISphere* sphere1 = new ISphere(dvec3(2 * (i + 1), -5.0, 0.0), 1.0); //Center, radius
+        scene.addOpaqueObject(new VisibleIShape(sphere1, redPlastic));
 
+    }
 	scene.addLight(lights[0]);
 }
 int main(int argc, char* argv[]) {
@@ -81,3 +88,4 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }
+

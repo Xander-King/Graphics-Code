@@ -66,6 +66,25 @@ VisibleIShape::VisibleIShape(IShapePtr shapePtr, const Material& mat, Image* ima
 
 void VisibleIShape::findClosestIntersection(const Ray& ray, OpaqueHitRecord& hit) const {
 	/* 386 - todo */
+    // this will just call findClosestIntersection for
+    // the IShape that is part of it
+    // If there is an intersection, then sets the material and texture
+    // of the VisibleIShape.
+    
+    // Call the find closest intersection for the underlying IShape which
+    // is stored in the shape pointer variable
+    shape -> findClosestIntersection(ray, hit);
+    
+    // If ray hit the shape then t is not FLT_MAX.
+    // If ray did hit the shape, then t is FLT_MAX we can stop.
+    
+    
+    
+    if (hit.t != FLT_MAX) {
+        hit.material = material;
+        hit.texture = texture;
+    }
+    
 	hit.t = FLT_MAX;
 	hit.interceptPt = ORIGIN3D;
 	hit.normal = Y_AXIS;
@@ -82,10 +101,27 @@ void VisibleIShape::findClosestIntersection(const Ray& ray, OpaqueHitRecord& hit
 
 void VisibleIShape::findIntersection(const Ray& ray, const vector<VisibleIShapePtr>& surfaces,
 	OpaqueHitRecord& theHit) {
-	/* CSE 386 - todo  */
-	theHit.t = FLT_MAX;
-	theHit.interceptPt = ORIGIN3D;
-	theHit.normal = Y_AXIS;
+    // loop through all the shapes in surfaces
+    // to find one with the smallest t value
+    // When we find it, then set the hit to the information
+    // about that shape
+    
+    theHit.t = FLT_MAX;
+    
+    // loop through shapes
+    for (const VisibleIShapePtr surface : surfaces) {
+        OpaqueHitRecord test;
+        surface -> findClosestIntersection(ray, test);
+        
+        // Check the test hit record to see if it's t is smaller
+        // than the one in theHit
+        
+        if(test.t < theHit.t) {
+            theHit = test;
+        }
+    }
+    
+
 }
 
 /**
@@ -168,9 +204,9 @@ void IDisk::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
     IPlane plane(center, n);
     plane.findClosestIntersection(ray, hit);
     
-    if (center.x + radius >= hit.interceptPt.x
-        || center.y + radius >= hit.interceptPt.y
-        || center.z + radius >= hit.interceptPt.z
+    if (center.x + radius < hit.interceptPt.x
+        || center.y + radius < hit.interceptPt.y
+        || center.z + radius < hit.interceptPt.z
         || hit.t == FLT_MAX) {
         
         hit.t = FLT_MAX;
@@ -768,9 +804,12 @@ ICylinderY::ICylinderY(const dvec3& pos, double rad, double len)
 
 void ICylinderY::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
 	static HitRecord hits[2];
+    
     // find all intersections of the ray, with the infinite version of the cylinder
     // we want the one with the smallest possible t value
+    
 	int numHits = IQuadricSurface::findIntersections(ray, hits);
+    
     // if there are hits, then hits[0] and possibly hits[1] will have data you can use
     // You'll need to look at the t-value and the intersection points
     // to determine IF there is a closest intersection, and where it is.
