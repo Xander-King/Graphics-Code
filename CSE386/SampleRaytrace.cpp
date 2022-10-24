@@ -25,8 +25,8 @@ vector<PositionalLightPtr> lights = { posLight };
 FrameBuffer frameBuffer(WINDOW_WIDTH, WINDOW_HEIGHT);
 RayTracer rayTrace(paleGreen);
 
-dvec3 cameraPos(0, 5, 10);
-dvec3 cameraFocus(0, 5, 0);
+dvec3 cameraPos(1, 1, 2);
+dvec3 cameraFocus(0, 0, 0);
 dvec3 cameraUp = Y_AXIS;
 double cameraFOV = PI_2;
 
@@ -55,13 +55,14 @@ void resize(int width, int height) {
 void buildScene() {
     // Mathematical Definitions of Shapes
 	IShape* plane = new IPlane(dvec3(0.0, 0.0, 0.0), dvec3(0.0, 1.0, 0.0)); //point, normal vector
-	ISphere* sphere1 = new ISphere(dvec3(10.0, -5.0, 0.0), 3.0); //Center, radius
+	ICylinder* cylinder1 = new ICylinder(dvec3(0.0, 0.0, 0.0), 3.0, 1.0, QuadricParameters::cylinderYQParams(1.0));
+    //Center, radius
 	ISphere* sphere2 = new ISphere(dvec3(-2.0, 0.0, -8.0), 2.0);
 	IEllipsoid* ellipsoid = new IEllipsoid(dvec3(4.0, 0.0, 3.0), dvec3(2.0, 1.0, 2.0)); //pos, sizes of axis
 	IDisk* disk = new IDisk(dvec3(15.0, 0.0, 0.0), dvec3(0.0, 0.0, 1.0), 5.0); 
     
     //We need atleast one visibleIShape or transparentShape
-   // scene.addOpaqueObject(new VisibleIShape(sphere1, silver));
+    scene.addOpaqueObject(new VisibleIShape(cylinder1, silver));
 	//scene.addOpaqueObject(new VisibleIShape(plane, tin));
 	//scene.addOpaqueObject(new VisibleIShape(sphere2, bronze));
 	//scene.addOpaqueObject(new VisibleIShape(ellipsoid, redPlastic));

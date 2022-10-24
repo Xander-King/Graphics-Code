@@ -21,7 +21,7 @@
 
 color ambientColor(const color& matAmbient, const color& lightColor) {
 	/* CSE 386 - todo  */
-	return matAmbient;
+	return matAmbient*lightColor;
 }
 
 /**
@@ -37,7 +37,7 @@ color ambientColor(const color& matAmbient, const color& lightColor) {
 color diffuseColor(const color& matDiffuse, const color& lightColor,
 	const dvec3& l, const dvec3& n) {
 	/* CSE 386 - todo  */
-	return matDiffuse;
+	return matDiffuse*lightColor*(max(glm::dot(l, n), 0, 0));
 
 }
 
@@ -57,7 +57,7 @@ color specularColor(const color& matSpecular, const color& lightColor,
 	double shininess,
 	const dvec3& r, const dvec3& v) {
 	/* CSE 386 - todo  */
-	return matSpecular;
+	return matSpecular*lightColor*glm::pow((max(((glm::dot(r, v))), 0, 0)), shininess);
 }
 
 /**
@@ -82,8 +82,79 @@ color totalColor(const Material& mat, const color& lightColor,
 	const dvec3& lightPos, const dvec3& intersectionPt,
 	bool attenuationOn,
 	const LightATParams& ATparams) {
+    
+   dvec3 lightVec = glm::normalize(lightPos - intersectionPt);
+    dvec3 reflectVec = (((2 * (glm::dot(lightVec, n))) * n) - lightVec);
 	/* CSE 386 - todo  */
-	return mat.diffuse;
+    color spec = specularColor(mat.specular, lightColor, mat.shininess, reflectVec, v );
+    color diff = diffuseColor(mat.diffuse, lightColor, lightVec, n);
+    color amb = ambientColor(mat.ambient, lightColor);
+    
+   
+    
+    if (!attenuationOn) {
+        dvec3 attOffSum = amb + diff + spec;
+        
+        if (attOffSum.x > 1.0) {
+            attOffSum.x = 1.0;
+        }
+        
+        if (attOffSum.y > 1.0) {
+            attOffSum.y = 1.0;
+        }
+        
+        if (attOffSum.z > 1.0) {
+            attOffSum.z = 1.0;
+        }
+        
+        if (attOffSum.x < 0.0) {
+            attOffSum.x = 0.0;
+        }
+        
+        if (attOffSum.y < 0.0) {
+            attOffSum.y = 0.0;
+        }
+        
+        if (attOffSum.z < 0.0) {
+            attOffSum.z = 0.0;
+        }
+        
+        return attOffSum;
+    }
+    
+    double d = glm::length(lightPos - intersectionPt);
+    
+    double att = (1/(ATparams.constant + (ATparams.linear*d) +(ATparams.quadratic*(glm::pow(d, 2)))));
+    
+    dvec3 attOnSum = amb + (att*diff) + (att*spec);
+    
+    if (attOnSum.x > 1.0) {
+        attOnSum.x = 1.0;
+    }
+    
+    if (attOnSum.y > 1.0) {
+        attOnSum.y = 1.0;
+    }
+    
+    if (attOnSum.z > 1.0) {
+        attOnSum.z = 1.0;
+    }
+    
+    if (attOnSum.x < 0.0) {
+        attOnSum.x = 0.0;
+    }
+    
+    if (attOnSum.y < 0.0) {
+        attOnSum.y = 0.0;
+    }
+    
+    if (attOnSum.z < 0.0) {
+        attOnSum.z = 0.0;
+    }
+    
+    return attOnSum;
+    
+
 }
 
 /**
@@ -105,8 +176,17 @@ color PositionalLight::illuminate(const dvec3& interceptWorldCoords,
 	const Frame& eyeFrame,
 	bool inShadow) const {
 
+    if(!LightSource::isOn) {
+        return color (0,0,0);
+    }
+    
+    if(LightSource::isOn && inShadow) {
+       return ambientColor(material.ambient, LightSource::lightColor);
+    }
+    
+    dvec3 v = glm::normalize(eyeFrame.origin - interceptWorldCoords);
 	/* CSE 386 - todo  */
-	return material.diffuse;
+	return totalColor(material, LightSource::lightColor, v, normal, PositionalLight::pos, interceptWorldCoords, PositionalLight::attenuationIsTurnedOn, PositionalLight::atParams);
 }
 
 /*
