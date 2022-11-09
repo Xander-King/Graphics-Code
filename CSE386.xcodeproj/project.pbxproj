@@ -28,6 +28,7 @@
 		517600CA257EA7EF00DD37C4 /* snail.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5176007E257E9F3700DD37C4 /* snail.ppm */; };
 		CF135609291940110039A424 /* exercisecappedcone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF135608291940110039A424 /* exercisecappedcone.cpp */; };
 		CF13560B2919D1B40039A424 /* cylinderconetests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF13560A2919D1B30039A424 /* cylinderconetests.cpp */; };
+		CF34D5F8291BE49500211F4D /* exercisetextures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF34D5F7291BE49500211F4D /* exercisetextures.cpp */; };
 		CF6CCE2D28F449D800776090 /* CameraRayShapeTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF6CCE2C28F449D800776090 /* CameraRayShapeTests.cpp */; };
 		CF6CCE3028F44C5F00776090 /* SampleRaytrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF6CCE2E28F449F800776090 /* SampleRaytrace.cpp */; };
 		CF6CCE3228F5088900776090 /* SphereIntersectionTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF6CCE3128F5088900776090 /* SphereIntersectionTests.cpp */; };
@@ -114,6 +115,7 @@
 		51AECD9824B4142F00BC4B16 /* CSE386 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CSE386; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF135608291940110039A424 /* exercisecappedcone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exercisecappedcone.cpp; sourceTree = "<group>"; };
 		CF13560A2919D1B30039A424 /* cylinderconetests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cylinderconetests.cpp; sourceTree = "<group>"; };
+		CF34D5F7291BE49500211F4D /* exercisetextures.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exercisetextures.cpp; sourceTree = "<group>"; };
 		CF6CCE2C28F449D800776090 /* CameraRayShapeTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraRayShapeTests.cpp; sourceTree = "<group>"; };
 		CF6CCE2E28F449F800776090 /* SampleRaytrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SampleRaytrace.cpp; sourceTree = "<group>"; };
 		CF6CCE3128F5088900776090 /* SphereIntersectionTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SphereIntersectionTests.cpp; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 		51AECD9A24B4142F00BC4B16 /* CSE386 */ = {
 			isa = PBXGroup;
 			children = (
+				CF34D5F7291BE49500211F4D /* exercisetextures.cpp */,
 				CF13560A2919D1B30039A424 /* cylinderconetests.cpp */,
 				CF135608291940110039A424 /* exercisecappedcone.cpp */,
 				CF7359C629059AA1001B9CED /* colortests.cpp */,
@@ -274,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				51760097257E9F3800DD37C4 /* raytracer.cpp in Sources */,
+				CF34D5F8291BE49500211F4D /* exercisetextures.cpp in Sources */,
 				CF135609291940110039A424 /* exercisecappedcone.cpp in Sources */,
 				CF6CCE2D28F449D800776090 /* CameraRayShapeTests.cpp in Sources */,
 				517600AA257E9F3800DD37C4 /* light.cpp in Sources */,

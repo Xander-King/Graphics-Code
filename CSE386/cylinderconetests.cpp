@@ -1,20 +1,20 @@
-#include <iostream>
-#include "defs.h"
-#include "io.h"
-#include "ishape.h"
-
-void checkIntersection(IShape& shape, Ray& ray) {
-	HitRecord hit;
-	shape.findClosestIntersection(ray, hit);
-	cout << "ray: " << ray.origin << " " << ray.dir << endl;
-	cout << " ** RESULT: ";
-	if (hit.t < FLT_MAX) {
-		cout << "hit.t=" << hit.t << ", hit.interceptPt=" << hit.interceptPt << endl;
-	}
-	else {
-		cout << "NO HIT" << endl;
-	}
-}
+//#include <iostream>
+//#include "defs.h"
+//#include "io.h"
+//#include "ishape.h"
+//
+//void checkIntersection(IShape& shape, Ray& ray) {
+//	HitRecord hit;
+//	shape.findClosestIntersection(ray, hit);
+//	cout << "ray: " << ray.origin << " " << ray.dir << endl;
+//	cout << " ** RESULT: ";
+//	if (hit.t < FLT_MAX) {
+//		cout << "hit.t=" << hit.t << ", hit.interceptPt=" << hit.interceptPt << endl;
+//	}
+//	else {
+//		cout << "NO HIT" << endl;
+//	}
+//}
 
 //int main(int argc, char* argv[]) {
 //

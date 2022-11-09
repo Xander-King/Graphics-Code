@@ -197,16 +197,14 @@ struct IConeY : public ICone {
 	virtual void findClosestIntersection(const Ray& ray, HitRecord& hit) const;
 };
 
-/**
- @struct IClosedConeY
- @brief Base class implicit representation of a cone with a cap.
- */
+// ishape.h declaration of IClosedConeY
 struct IClosedConeY : public IConeY {
     IClosedConeY(const dvec3& position, double rad, double H);
     virtual void findClosestIntersection(const Ray& ray, HitRecord& hit) const;
 protected:
     IDisk cap;
 };
+
 
 
 /**

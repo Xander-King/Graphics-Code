@@ -80,9 +80,15 @@ void VisibleIShape::findClosestIntersection(const Ray& ray, OpaqueHitRecord& hit
     
     
     
-    if (hit.t < FLT_MAX) {
+    if (hit.t != FLT_MAX) { //Valid hit
           hit.material = material;
           hit.texture = texture;
+        if (hit.texture != nullptr) {
+            // this function defines how to take a point (x, y, z)
+            // and map it to u and v values for the texture
+            // passing in the intercept pt and function SETS u and v
+            shape -> getTexCoords(hit.interceptPt, hit.u, hit.v);
+        }
       }
 
 }
@@ -197,17 +203,20 @@ void IDisk::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
     IPlane plane(center, n);
     plane.findClosestIntersection(ray, hit);
     
-    if (center.x + radius < hit.interceptPt.x
-        || center.y + radius < hit.interceptPt.y
-        || center.z + radius < hit.interceptPt.z
-        || hit.t == FLT_MAX) {
-        
+    if(hit.t == FLT_MAX) {
+        return;
+    }
+    bool notHitDisk = (glm::distance(hit.interceptPt, center) > radius);
+//    bool notHitDiskx = (hit.interceptPt.x < glm::cos(center.x - radius) || hit.interceptPt.x > glm::cos(center.x + radius));
+//    bool notHitDisky = (hit.interceptPt.y < center.y - radius || hit.interceptPt.y > center.y + radius);
+//    bool notHitDiskz = (hit.interceptPt.z < center.z - radius || hit.interceptPt.z > center.z + radius);
+    if (notHitDisk) {
         hit.t = FLT_MAX;
         return;
     }
     
-    hit.interceptPt = ray.getPoint(hit.t);
-    hit.normal = n;
+   hit.interceptPt = ray.getPoint(hit.t);
+   hit.normal = n;
 }
 
 /**
@@ -794,7 +803,7 @@ void IConeY::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
 // ishape.cpp definition of IClosedConeY::IClosedConeY
 IClosedConeY::IClosedConeY(const dvec3& position, double rad, double H)
     : IConeY(position, rad, H),
-    cap(dvec3(center.x, center.y - height, center.z), dvec3(0, -1, 0), rad) {
+    cap(dvec3(center.x, (center.y - height), center.z), dvec3(0, -1, 0), rad) {
 } // fill in blank with cap's center and normal
 
 
@@ -810,19 +819,22 @@ HitRecord coneHit;
     cap.findClosestIntersection(ray, capHit);
 // Use the two hit records to figure out which part was hit, if any,
        // if any, should be rendered.
-    if (coneHit.t == FLT_MAX && capHit.t < FLT_MAX)  {
-        hit = capHit;
-    } else if (coneHit.t < FLT_MAX && capHit.t == FLT_MAX)  {
-        hit = coneHit;
-    } else if (coneHit.t < capHit.t) {
-            hit = coneHit;
-    } else if (coneHit.t > capHit.t) {
+//    hit.t = FLT_MAX;
+//    if (coneHit.t == FLT_MAX && capHit.t < FLT_MAX)  {
+//        hit = capHit;
+//    } else if (coneHit.t < FLT_MAX && capHit.t == FLT_MAX)  {
+//        hit = coneHit;
+    // if (coneHit.t < capHit.t) {
             hit = capHit;
-    } else if (coneHit.t == capHit.t){
-        hit = capHit;
-    } else {
-        hit.t = FLT_MAX;
-    }
+   // }
+    //else if (coneHit.t > capHit.t) {
+//            hit = capHit;
+//    }
+//    } else if (coneHit.t == capHit.t){
+//        hit = capHit;
+//    } else {
+//        hit.t = FLT_MAX;
+//    }
     
 }
 
