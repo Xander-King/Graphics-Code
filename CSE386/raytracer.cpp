@@ -59,27 +59,39 @@ void RayTracer::raytraceScene(FrameBuffer& frameBuffer, int depth,
             // when the above is done loop through all the shapes,
             // hitRecord will have the information about t, interceptPt, normal,
             // material, and texture.
-            if(theHit.t != FLT_MAX) {
-                c = theHit.material.diffuse;
+            if(theHit.t < FLT_MAX) {
+                for(auto l: lights) {
+                c +=  l -> illuminate(theHit.interceptPt, theHit.normal, theHit.material, camera.getFrame(), l -> pointIsInAShadow(theHit.interceptPt, theHit.normal, objs, camera.getFrame()));
+                    
+                }
+                if (c.x > 1) {
+                    c.x = 1;
+                }
+                if (c.y > 1) {
+                    c.y = 1;
+                }
+                if (c.z > 1) {
+                    c.z = 1;
+                }
             } else {
                 c = defaultColor;
-            }
-            
+        }
             frameBuffer.setColor(x, y, c);
-            frameBuffer.showAxes(x, y, ray, 1);
+            frameBuffer.showAxes(x, y, ray, 0.25);
             
             
+//			const VisibleIShape& firstVisibleShape = *theScene.opaqueObjs[0];
+//			const IShape& firstShape = *firstVisibleShape.shape;
+//			OpaqueHitRecord hit;
+//			firstShape.findClosestIntersection(ray, hit);
+////			if (hit.t != FLT_MAX) {
+////				hit.material = firstVisibleShape.material;
+////				color C = hit.material.diffuse;
+////				frameBuffer.setColor(x, y, C);
+////			}
+//			frameBuffer.showAxes(x, y, ray, 0.25);
             
-			const VisibleIShape& firstVisibleShape = *theScene.opaqueObjs[0];
-			const IShape& firstShape = *firstVisibleShape.shape;
-			OpaqueHitRecord hit;
-			firstShape.findClosestIntersection(ray, hit);
-			if (hit.t != FLT_MAX) {
-				hit.material = firstVisibleShape.material;
-				color C = hit.material.diffuse;
-				frameBuffer.setColor(x, y, C);
-			}
-			frameBuffer.showAxes(x, y, ray, 0.25);			// Displays R/x, G/y, B/z axes
+            // Displays R/x, G/y, B/z axes
 		}
 	}
 

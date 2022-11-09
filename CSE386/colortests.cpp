@@ -4,99 +4,99 @@
 #include "light.h"
 #include "camera.h"
 
-int main(int argc, char* argv[]) {
-	// This example is the one used in the handout we covered in class.
-	dvec3 eyePos(3.0, 0.0, 1.0);
-
-	dvec3 interceptPt(5.0, 2.0, -3.0);
-	dvec3 pointToRight(4.0, 4.0, 0.0);
-	dvec3 pointToLeft(0.0, 0.0, 0.0);
-
-	color L1color(0.6, 0.6, 0.7);
-	dvec3 L1pos(6.0, 1.0, 0.0);
-
-	color mat1amb(0.4, 0.5, 0.6);
-	color mat1diff(0.9, 1.0, 0.9);
-	color mat1spec(0.9, 0.8, 0.7);
-
-	dvec3 V1 = pointToRight - interceptPt;
-	dvec3 V2 = pointToLeft - interceptPt;
-	dvec3 n = glm::normalize(glm::cross(V1, V2));
-	dvec3 v = glm::normalize(eyePos - interceptPt);
-	dvec3 l = glm::normalize(L1pos - interceptPt);
-	dvec3 r = glm::normalize(2.0 * glm::dot(l, n) * n - l);
-
-	cout << "n: " << n << endl;
-	cout << "v: " << v << endl;
-	cout << "l: " << l << endl;
-	cout << "r: " << r << endl;
-	cout << endl;
-
-	cout << "Ambient: " << ambientColor(mat1amb, L1color) << endl;
-	cout << "Diffuse: " << diffuseColor(mat1diff, L1color, l, n) << endl;
-	cout << "Specular: " << specularColor(mat1spec, L1color, 1.0, r, v) << endl;
-
-	PositionalLight L1(L1pos, L1color);
-	Material mat1(mat1amb, mat1diff, mat1spec, 1.0);
-	LightATParams atParams(1.0, 2.0, 0.0);
-	bool useAttenuation = false;
-
-	cout << "Total: " << totalColor(mat1, L1color, v, n, L1pos, interceptPt, useAttenuation, atParams) << endl;
-	cout << endl;
-
-	cout << "Attenuation factor: " << atParams.factor(glm::distance(L1pos, interceptPt)) << endl;
-
-	cout << endl;
-
-	cout << "Tests involving negative dot products" << endl;
-	dvec3 wonkyL = glm::normalize(dvec3(-1.0, -1.0, -1.0));
-	cout << "Diffuse with negative l dot n: " << diffuseColor(mat1diff, L1color, wonkyL, n) << endl;
-	dvec3 wonkyV = glm::normalize(dvec3(-1.0, -1.0, -1.0));
-	cout << "Specular with negative r dot v: " << specularColor(mat1spec, L1color, 0.5, r, wonkyV) << endl;
-
-	cout << endl;
-
-	vector<VisibleIShapePtr> objs;
-
-	cout << "illuminate tests" << endl << endl;
-	PositionalLight light1(L1pos, L1color);
-
-	PerspectiveCamera pCamera(eyePos, interceptPt, Y_AXIS, PI_2, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-	cout << "Light on: FALSE   Shadow: FALSE    Attenuation on: FALSE" << endl;
-	light1.isOn = false; light1.attenuationIsTurnedOn = false;
-	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), false) << endl;
-
-	cout << "Light on: FALSE   Shadow: FALSE    Attenuation on: TRUE " << endl;
-	light1.isOn = false; light1.attenuationIsTurnedOn = true;
-	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), false) << endl;
-
-	cout << "Light on: FALSE   Shadow: TRUE     Attenuation on: FALSE" << endl;
-	light1.isOn = false; light1.attenuationIsTurnedOn = false;
-	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), true) << endl;
-
-	cout << "Light on: FALSE   Shadow: TRUE     Attenuation on: TRUE" << endl;
-	light1.isOn = false; light1.attenuationIsTurnedOn = true;
-	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), true) << endl;
-
-	cout << "Light on: TRUE   Shadow: FALSE    Attenuation on: FALSE" << endl;
-	light1.isOn = true; light1.attenuationIsTurnedOn = false;
-	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), false) << endl;
-
-	cout << "Light on: TRUE   Shadow: FALSE    Attenuation on: TRUE " << endl;
-	light1.isOn = true; light1.attenuationIsTurnedOn = true;
-	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), false) << endl;
-
-	cout << "Light on: TRUE   Shadow: TRUE     Attenuation on: FALSE" << endl;
-	light1.isOn = true; light1.attenuationIsTurnedOn = false;
-	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), true) << endl;
-
-	cout << "Light on: TRUE   Shadow: TRUE     Attenuation on: TRUE" << endl;
-	light1.isOn = true; light1.attenuationIsTurnedOn = true;
-	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), true) << endl;
-
-	return 0;
-}
+//int main(int argc, char* argv[]) {
+//	// This example is the one used in the handout we covered in class.
+//	dvec3 eyePos(3.0, 0.0, 1.0);
+//
+//	dvec3 interceptPt(5.0, 2.0, -3.0);
+//	dvec3 pointToRight(4.0, 4.0, 0.0);
+//	dvec3 pointToLeft(0.0, 0.0, 0.0);
+//
+//	color L1color(0.6, 0.6, 0.7);
+//	dvec3 L1pos(6.0, 1.0, 0.0);
+//
+//	color mat1amb(0.4, 0.5, 0.6);
+//	color mat1diff(0.9, 1.0, 0.9);
+//	color mat1spec(0.9, 0.8, 0.7);
+//
+//	dvec3 V1 = pointToRight - interceptPt;
+//	dvec3 V2 = pointToLeft - interceptPt;
+//	dvec3 n = glm::normalize(glm::cross(V1, V2));
+//	dvec3 v = glm::normalize(eyePos - interceptPt);
+//	dvec3 l = glm::normalize(L1pos - interceptPt);
+//	dvec3 r = glm::normalize(2.0 * glm::dot(l, n) * n - l);
+//
+//	cout << "n: " << n << endl;
+//	cout << "v: " << v << endl;
+//	cout << "l: " << l << endl;
+//	cout << "r: " << r << endl;
+//	cout << endl;
+//
+//	cout << "Ambient: " << ambientColor(mat1amb, L1color) << endl;
+//	cout << "Diffuse: " << diffuseColor(mat1diff, L1color, l, n) << endl;
+//	cout << "Specular: " << specularColor(mat1spec, L1color, 1.0, r, v) << endl;
+//
+//	PositionalLight L1(L1pos, L1color);
+//	Material mat1(mat1amb, mat1diff, mat1spec, 1.0);
+//	LightATParams atParams(1.0, 2.0, 0.0);
+//	bool useAttenuation = false;
+//
+//	cout << "Total: " << totalColor(mat1, L1color, v, n, L1pos, interceptPt, useAttenuation, atParams) << endl;
+//	cout << endl;
+//
+//	cout << "Attenuation factor: " << atParams.factor(glm::distance(L1pos, interceptPt)) << endl;
+//
+//	cout << endl;
+//
+//	cout << "Tests involving negative dot products" << endl;
+//	dvec3 wonkyL = glm::normalize(dvec3(-1.0, -1.0, -1.0));
+//	cout << "Diffuse with negative l dot n: " << diffuseColor(mat1diff, L1color, wonkyL, n) << endl;
+//	dvec3 wonkyV = glm::normalize(dvec3(-1.0, -1.0, -1.0));
+//	cout << "Specular with negative r dot v: " << specularColor(mat1spec, L1color, 0.5, r, wonkyV) << endl;
+//
+//	cout << endl;
+//
+//	vector<VisibleIShapePtr> objs;
+//
+//	cout << "illuminate tests" << endl << endl;
+//	PositionalLight light1(L1pos, L1color);
+//
+//	PerspectiveCamera pCamera(eyePos, interceptPt, Y_AXIS, PI_2, WINDOW_WIDTH, WINDOW_HEIGHT);
+//
+//	cout << "Light on: FALSE   Shadow: FALSE    Attenuation on: FALSE" << endl;
+//	light1.isOn = false; light1.attenuationIsTurnedOn = false;
+//	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), false) << endl;
+//
+//	cout << "Light on: FALSE   Shadow: FALSE    Attenuation on: TRUE " << endl;
+//	light1.isOn = false; light1.attenuationIsTurnedOn = true;
+//	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), false) << endl;
+//
+//	cout << "Light on: FALSE   Shadow: TRUE     Attenuation on: FALSE" << endl;
+//	light1.isOn = false; light1.attenuationIsTurnedOn = false;
+//	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), true) << endl;
+//
+//	cout << "Light on: FALSE   Shadow: TRUE     Attenuation on: TRUE" << endl;
+//	light1.isOn = false; light1.attenuationIsTurnedOn = true;
+//	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), true) << endl;
+//
+//	cout << "Light on: TRUE   Shadow: FALSE    Attenuation on: FALSE" << endl;
+//	light1.isOn = true; light1.attenuationIsTurnedOn = false;
+//	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), false) << endl;
+//
+//	cout << "Light on: TRUE   Shadow: FALSE    Attenuation on: TRUE " << endl;
+//	light1.isOn = true; light1.attenuationIsTurnedOn = true;
+//	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), false) << endl;
+//
+//	cout << "Light on: TRUE   Shadow: TRUE     Attenuation on: FALSE" << endl;
+//	light1.isOn = true; light1.attenuationIsTurnedOn = false;
+//	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), true) << endl;
+//
+//	cout << "Light on: TRUE   Shadow: TRUE     Attenuation on: TRUE" << endl;
+//	light1.isOn = true; light1.attenuationIsTurnedOn = true;
+//	cout << light1.illuminate(interceptPt, n, mat1, pCamera.getFrame(), true) << endl;
+//
+//	return 0;
+//}
 
 /*
 ColorTests

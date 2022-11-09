@@ -15,8 +15,8 @@ void cameraRayTests() {
     int nx = 200;
     int ny = 200;
     
-    PerspectiveCamera cam(camPos, camLookPt, up, fov, nx, ny);
-    //OrthographicCamera cam(camPos, camLookPt, up, nx, ny, scale);
+    //PerspectiveCamera cam(camPos, camLookPt, up, fov, nx, ny);
+    OrthographicCamera cam(camPos, camLookPt, up, nx, ny, scale);
     
     // Check that the frame is what we expect (pos, u, v, w)
     
@@ -54,8 +54,10 @@ void cameraRayTests() {
     // 1. How do we take a pixel (x,y) in the rendering window and
     // compute its corresponding coordinates in the image plane?
     // (calculations are the same for both camera types)
-    
-    
+    Ray r = cam.getRay(100, 100); // gets me the viewing ray for pixel (0, 0)
+    cout << r.origin << endl;
+        cout << r.origin << endl;
+        cout << r.dir << endl;
     // 2. How do we take a pixel (x,y) in the rendering window and
     // compute its corresponding viewing ray through the image (origin and angle)?
     // (perspective calculations are different from orthographic calculations)
@@ -90,8 +92,30 @@ void rayShapeTests() {
     // Intuitively: Does this ray intersect this sphere?
     // How can we check with code?
     // WARNING: only works if quadratic(a, b, c, double[2]) is working
-   
+    HitRecord hits[2]; // stores data about the hits including t, and inters. pt.
+        int hitCount = sphere.findIntersections(ray, hits);
     
+    cout << "hits: " << hitCount << endl;
+    
+    // If hitCount > 0, then we can expect the array to have data about the hit(s),
+        // sorted by t value.
+        cout << hits[0].t << endl;
+        cout << hits[1].t << endl;
+
+        // Locations of the hits. Again, these are only valid if there are hits.
+        cout << hits[0].interceptPt << endl;
+        cout << hits[1].interceptPt << endl;
+
+        // Can my camera see the sphere? Remember that the camera has a getRay() that
+        // takes a pixel (x, y) and gives back the viewing ray for that pixel. So, for
+        // example, if the rendering window has 40,000 pixels, then the camera can
+        // generate 40,000 viewing rays (one for each pixel). Each of those can be checked
+        // to see which objects it intersects.
+       
+
+        // Here is code for checking pixel (100, 100) to see if the corresponding
+        // ray hits the sphere.
+        cout << sphere.findIntersections(cam.getRay(100, 100), hits);
     
 }
 

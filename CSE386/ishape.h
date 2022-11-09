@@ -188,7 +188,7 @@ struct ICone : public IQuadricSurface {
 };
 
 /**
- * @struct	ICone
+ * @struct	IConeY
  * @brief	Base class for implicit representation of a cone.
  */
 
@@ -196,6 +196,18 @@ struct IConeY : public ICone {
 	IConeY(const dvec3& position, double R, double H);
 	virtual void findClosestIntersection(const Ray& ray, HitRecord& hit) const;
 };
+
+/**
+ @struct IClosedConeY
+ @brief Base class implicit representation of a cone with a cap.
+ */
+struct IClosedConeY : public IConeY {
+    IClosedConeY(const dvec3& position, double rad, double H);
+    virtual void findClosestIntersection(const Ray& ray, HitRecord& hit) const;
+protected:
+    IDisk cap;
+};
+
 
 /**
  * @struct	ICylinderY

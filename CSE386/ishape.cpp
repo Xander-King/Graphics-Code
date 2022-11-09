@@ -80,15 +80,11 @@ void VisibleIShape::findClosestIntersection(const Ray& ray, OpaqueHitRecord& hit
     
     
     
-    if (hit.t != FLT_MAX) {
-        hit.material = material;
-        hit.texture = texture;
-    }
-    
-	hit.t = FLT_MAX;
-	hit.interceptPt = ORIGIN3D;
-	hit.normal = Y_AXIS;
-	hit.material = material;
+    if (hit.t < FLT_MAX) {
+          hit.material = material;
+          hit.texture = texture;
+      }
+
 }
 
 /**
@@ -109,17 +105,14 @@ void VisibleIShape::findIntersection(const Ray& ray, const vector<VisibleIShapeP
     theHit.t = FLT_MAX;
     
     // loop through shapes
-    for (const VisibleIShapePtr surface : surfaces) {
-        OpaqueHitRecord test;
-        surface -> findClosestIntersection(ray, test);
-        
-        // Check the test hit record to see if it's t is smaller
-        // than the one in theHit
-        
-        if(test.t < theHit.t) {
-            theHit = test;
+    for (VisibleIShape* surface : surfaces) {
+            OpaqueHitRecord thisHit;
+            surface -> findClosestIntersection(ray, thisHit);
+            if (thisHit.t < theHit.t) {
+                theHit = thisHit;
+            }
         }
-    }
+
     
 
 }
@@ -756,6 +749,8 @@ IConeY::IConeY(const dvec3& pos, double rad, double H)
 	: ICone(pos, rad, H, QuadricParameters::coneYQParams(rad, H)) {
 }
 
+
+
 /**
  * @fn	void ICone::findClosestIntersection(const Ray &ray, HitRecord &hit) const
  * @brief	Searches for the nearest intersection
@@ -767,13 +762,69 @@ void IConeY::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
 	static HitRecord hits[2];
 	int numHits = IQuadricSurface::findIntersections(ray, hits);
 
+    double centerCone = center.y;
+    double coneBot = center.y - height;
+    double firstInt = hits[0].interceptPt.y;
+    double secondInt = hits[1].interceptPt.y;
+    bool firstHit = (firstInt < center.y &&
+                     firstInt >= coneBot);
+    bool secondHit = (secondInt < center.y &&
+                     secondInt >= coneBot);
     if (numHits == 0) {
         hit.t = FLT_MAX;
-        
+    } else if (numHits == 1 && firstHit) {
+        hit = hits[0];
+    } else if (numHits == 2){
+        if(!firstHit && secondHit) {
+                hit = hits[1];
+        } else if (firstHit && !secondHit) {
+                hit = hits[0];
+        } else if (!firstHit && !secondHit) {
+            hit.t = FLT_MAX;
+        } else {
+            hit = hits[0];
+        }
+                
+    } else {
+    hit.t = FLT_MAX;
     }
 }
 
     
+// ishape.cpp definition of IClosedConeY::IClosedConeY
+IClosedConeY::IClosedConeY(const dvec3& position, double rad, double H)
+    : IConeY(position, rad, H),
+    cap(dvec3(center.x, center.y - height, center.z), dvec3(0, -1, 0), rad) {
+} // fill in blank with cap's center and normal
+
+
+// ishape.cpp definition of IClosedConeY::findClosestIntersection
+void IClosedConeY::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
+HitRecord coneHit;
+    HitRecord capHit;
+    
+    //IDisk cap = this -> cap;
+    // Now call findClosestIntersection() for the cone's parent class
+      // and call findClosestIntersection() for the cap.
+    IConeY::findClosestIntersection(ray, coneHit);
+    cap.findClosestIntersection(ray, capHit);
+// Use the two hit records to figure out which part was hit, if any,
+       // if any, should be rendered.
+    if (coneHit.t == FLT_MAX && capHit.t < FLT_MAX)  {
+        hit = capHit;
+    } else if (coneHit.t < FLT_MAX && capHit.t == FLT_MAX)  {
+        hit = coneHit;
+    } else if (coneHit.t < capHit.t) {
+            hit = coneHit;
+    } else if (coneHit.t > capHit.t) {
+            hit = capHit;
+    } else if (coneHit.t == capHit.t){
+        hit = capHit;
+    } else {
+        hit.t = FLT_MAX;
+    }
+    
+}
 
 
 
@@ -818,19 +869,33 @@ void ICylinderY::findClosestIntersection(const Ray& ray, HitRecord& hit) const {
     // to determine IF there is a closest intersection, and where it is.
     // remember that if there are 2 valid hits, they will be sorted by t value
     // is your quadratic broken? if so, you may find out today.
-	
+    double halfLength = length/2;
+    double topHalf = center.y + halfLength;
+    double bottomHalf = center.y - halfLength;
+    double firstInt = hits[0].interceptPt.y;
+    double secondInt = hits[1].interceptPt.y;
+    bool firstHit = (firstInt <= topHalf &&
+                     firstInt >= bottomHalf);
+    bool secondHit = (secondInt <= topHalf &&
+                     secondInt >= bottomHalf);
     if (numHits == 0) {
 		hit.t = FLT_MAX;
-	} else {
-        if(hits[0].interceptPt.y > radius && hits[1].interceptPt.y <= radius) {
+    } else if (numHits == 1 && firstHit) {
+        hit = hits[0];
+    } else if (numHits == 2){
+        if(!firstHit && secondHit) {
                 hit = hits[1];
-        } else if (hits[0].interceptPt.y <= radius && hits[1].interceptPt.y > radius) {
+        } else if (firstHit && !secondHit) {
                 hit = hits[0];
-        } else if (hits[0].interceptPt.y > radius && hits[1].interceptPt.y > radius) {
+        } else if (!firstHit && !secondHit) {
             hit.t = FLT_MAX;
+        } else {
+            hit = hits[0];
         }
                 
-            }
+    } else {
+    hit.t = FLT_MAX;
+    }
         }
 
 
